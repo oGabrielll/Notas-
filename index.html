@@ -18,14 +18,49 @@
     }
 
     body {
-      background: black;
-      color: white;
-      font-family: 'Inter', system-ui, sans-serif;
       height: 100vh;
       overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: white;
+      background: black;
+    }
+
+    /* FUNDO AURORA */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -50%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0, 255, 200, 0.25),
+        rgba(120, 0, 255, 0.25),
+        rgba(255, 0, 120, 0.15),
+        transparent 60%
+      );
+      animation: aurora 18s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    body::after {
+      animation-duration: 28s;
+      filter: blur(60px);
+      opacity: 0.8;
+    }
+
+    @keyframes aurora {
+      0% {
+        transform: translate(-20%, -10%) rotate(0deg);
+      }
+      50% {
+        transform: translate(10%, 20%) rotate(120deg);
+      }
+      100% {
+        transform: translate(-10%, -20%) rotate(240deg);
+      }
     }
 
     /* TELA INICIAL */
@@ -35,11 +70,12 @@
       align-items: center;
       gap: 20px;
       cursor: pointer;
+      z-index: 2;
     }
 
     .start-screen span {
       letter-spacing: 0.2em;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .heart {
@@ -62,9 +98,9 @@
       font-weight: 900;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      text-shadow: 0 0 30px rgba(255, 0, 120, 0.6);
-      padding: 20px;
+      text-shadow: 0 0 40px rgba(255, 0, 120, 0.8);
       opacity: 0;
+      z-index: 2;
     }
 
     /* CORAÇÕES */
@@ -74,6 +110,7 @@
       font-size: 20px;
       animation: float 6s linear forwards;
       opacity: 0.8;
+      z-index: 1;
     }
 
     @keyframes float {
@@ -97,25 +134,13 @@
     }
 
     @keyframes fadeOut {
-      from {
-        opacity: 1;
-        transform: scale(1);
-      }
-      to {
-        opacity: 0;
-        transform: scale(0.9);
-      }
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.9); }
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(1.2);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+      from { opacity: 0; transform: scale(1.2); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     /* MOBILE */
@@ -150,7 +175,6 @@
         startScreen.style.display = 'none';
         message.style.display = 'block';
         message.classList.add('fade-in');
-
         setInterval(createHeart, 300);
       }, 800);
     }
@@ -163,9 +187,7 @@
       heart.style.fontSize = (15 + Math.random() * 20) + 'px';
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 6000);
     }
   </script>
 
