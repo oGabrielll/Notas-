@@ -2,9 +2,10 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Yasmin ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yasmin ❤️</title>
 
+  <!-- Fonte profissional -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
@@ -14,128 +15,118 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', system-ui, sans-serif;
     }
 
     body {
+      background: black;
+      color: white;
+      font-family: 'Inter', system-ui, sans-serif;
       height: 100vh;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, #111, #000);
-      color: #fff;
-      text-align: center;
     }
 
-    /* BOTÃO INICIAL */
-    .start {
+    /* TELA INICIAL */
+    .start-screen {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
+      gap: 20px;
       cursor: pointer;
-      animation: pulse 2.5s infinite;
     }
 
-    .heart-btn {
-      font-size: 4rem;
+    .start-screen span {
+      letter-spacing: 0.2em;
+      opacity: 0.8;
     }
 
-    .start span {
-      font-size: 0.85rem;
-      letter-spacing: 0.35em;
-      opacity: 0.65;
+    .heart {
+      font-size: 90px;
+      animation: pulse 1.5s infinite;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.07); }
+      50% { transform: scale(1.15); }
       100% { transform: scale(1); }
     }
 
-    /* MENSAGEM (OCULTA NO INÍCIO) */
+    /* MENSAGEM (COMEÇA ESCONDIDA) */
     .message {
       display: none;
-      z-index: 2;
-      padding: 0 16px;
-    }
-
-    h1 {
-      font-size: clamp(2.6rem, 9vw, 5.2rem);
+      position: absolute;
+      text-align: center;
+      font-size: 3rem;
       font-weight: 900;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      line-height: 1.1;
-      text-shadow:
-        0 0 18px rgba(255, 0, 120, 0.45),
-        0 0 36px rgba(255, 0, 120, 0.25);
-      animation: glow 3s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.015); }
-      100% { transform: scale(1); }
+      text-shadow: 0 0 30px rgba(255, 0, 120, 0.6);
+      padding: 20px;
     }
 
     /* CORAÇÕES */
-    .heart {
+    .floating-heart {
       position: absolute;
-      bottom: -40px;
-      color: rgba(255, 0, 120, 0.75);
-      animation: floatUp linear infinite;
-      pointer-events: none;
+      bottom: -20px;
+      color: red;
+      font-size: 20px;
+      animation: float 6s linear forwards;
+      opacity: 0.8;
     }
 
-    @keyframes floatUp {
-      from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 0.8;
       }
-      to {
-        transform: translateY(-120vh) scale(1.4);
+      100% {
+        transform: translateY(-120vh);
         opacity: 0;
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .message {
+        font-size: 2.2rem;
       }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- APARECE PRIMEIRO -->
-  <div class="start" id="startBtn">
-    <div class="heart-btn">❤️</div>
+  <!-- TELA INICIAL -->
+  <div class="start-screen" onclick="startLove()">
+    <div class="heart">❤️</div>
     <span>APERTE AQUI</span>
   </div>
 
-  <!-- SÓ APARECE DEPOIS DO CLIQUE -->
+  <!-- MENSAGEM -->
   <div class="message" id="message">
-    <h1>TE AMO<br>YASMIN ❤️</h1>
+    TE AMO<br>YASMIN
   </div>
 
   <script>
-    const startBtn = document.getElementById("startBtn");
-    const message = document.getElementById("message");
+    function startLove() {
+      document.querySelector('.start-screen').style.display = 'none';
+      document.getElementById('message').style.display = 'block';
 
-    startBtn.addEventListener("click", () => {
-      startBtn.remove();            // remove totalmente
-      message.style.display = "block";
-
-      setInterval(createHeart, 900);
-    });
+      setInterval(createHeart, 300);
+    }
 
     function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "❤️";
-
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (Math.random() * 14 + 14) + "px";
-      heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
-
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (15 + Math.random() * 20) + 'px';
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 9000);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
     }
   </script>
 
