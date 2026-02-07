@@ -1,250 +1,250 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minhas Notas</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notas</title>
 
-  <style>
-    :root {
-      --bg: #0f1220;
-      --card: #171a2e;
-      --text: #e9ecff;
-      --muted: #9aa1ff;
-      --accent: #6c7bff;
-    }
+<style>
+:root {
+  --bg: #0f1220;
+  --card: #171a2e;
+  --text: #e9ecff;
+  --muted: #9aa1ff;
+  --accent: #6c7bff;
+}
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
-    }
+* {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
 
-    body {
-      margin: 0;
-      background: linear-gradient(120deg, #0f1220, #0b0e1a);
-      color: var(--text);
-    }
+body {
+  margin: 0;
+  background: linear-gradient(120deg, #0f1220, #0b0e1a);
+  color: var(--text);
+}
 
-    .wrap {
-      max-width: 96vw;
-      margin: 0 auto;
-      padding: 16px;
-    }
+.wrap {
+  max-width: 96vw;
+  margin: auto;
+  padding: 16px;
+}
 
-    header {
-      padding: 20px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    /* ===== LAYOUT PRINCIPAL ===== */
-    main.wrap {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr; /* notas | editor */
-      gap: 24px;
-      align-items: start;
-    }
+/* ===== LAYOUT ===== */
+main.wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 24px;
+}
 
-    /* ===== NOTAS (ESQUERDA) ===== */
-    #notes {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      max-height: 78vh;
-      overflow-y: auto;
-      padding-right: 6px;
-    }
+/* ===== NOTAS (ESQUERDA) ===== */
+#notes {
+  display: grid;
+  gap: 18px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
 
-    .note {
-      background: var(--card);
-      border: 1px solid #232862;
-      border-radius: 18px;
-      padding: 16px;
-      display: grid;
-      gap: 10px;
-    }
+/* BASE */
+.note {
+  background: var(--card);
+  border: 1px solid #232862;
+  border-radius: 18px;
+  transition: 0.2s;
+}
 
-    .note h3 {
-      margin: 0;
-      font-size: 1.1rem;
-    }
+/* NOTAS ANTIGAS (MAIORES) */
+.note.old {
+  padding: 22px;
+}
 
-    .note p {
-      margin: 0;
-      font-size: 0.95rem;
-      color: #d6dbff;
-      white-space: pre-wrap;
-    }
+.note.old h3 {
+  font-size: 1.15rem;
+}
 
-    .note small {
-      color: var(--muted);
-    }
+.note.old p {
+  font-size: 1rem;
+}
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
+/* NOTAS NOVAS (MENORES) */
+.note.new {
+  padding: 14px;
+  opacity: 0.85;
+}
 
-    .actions button {
-      padding: 6px 12px;
-      font-size: 0.8rem;
-    }
+.note.new h3 {
+  font-size: 0.95rem;
+}
 
-    /* ===== EDITOR (DIREITA) ===== */
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
+.note.new p {
+  font-size: 0.85rem;
+}
 
-    input, textarea, button {
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid #232862;
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
+.note p {
+  white-space: pre-wrap;
+  color: #d6dbff;
+}
 
-    textarea {
-      min-height: 500px;
-      resize: vertical;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      width: 100%;
-    }
+.note small {
+  color: var(--muted);
+}
 
-    button {
-      cursor: pointer;
-    }
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
 
-    button.primary {
-      background: linear-gradient(135deg, var(--accent), #8b95ff);
-      color: #0b0e1a;
-      border: none;
-    }
+button {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid #232862;
+  border-radius: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      padding: 20px;
-    }
+button.primary {
+  background: linear-gradient(135deg, var(--accent), #8b95ff);
+  border: none;
+  color: #0b0e1a;
+}
 
-    /* ===== MOBILE ===== */
-    @media (max-width: 900px) {
-      main.wrap {
-        grid-template-columns: 1fr;
-      }
+/* ===== EDITOR (DIREITA) ===== */
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  margin-bottom: 10px;
+}
 
-      #notes {
-        max-height: none;
-      }
-    }
-  </style>
+input, textarea {
+  width: 100%;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid #232862;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+textarea {
+  min-height: 520px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  main.wrap {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 
 <body>
-  <header class="wrap">
-    <h1>📝 Minhas Notas</h1>
-    <small>salvo no navegador</small>
-  </header>
+<header class="wrap">
+  <h2>📝 Minhas Notas</h2>
+  <small>localStorage</small>
+</header>
 
-  <main class="wrap">
-    <!-- NOTAS SALVAS (ESQUERDA) -->
-    <section id="notes"></section>
+<main class="wrap">
+  <!-- NOTAS -->
+  <section id="notes"></section>
 
-    <!-- EDITOR (DIREITA) -->
-    <section>
-      <section class="toolbar">
-        <input id="title" placeholder="Título" />
-        <button class="primary" onclick="saveNote()">Salvar</button>
-        <button onclick="clearAll()">Limpar</button>
-      </section>
+  <!-- EDITOR -->
+  <section>
+    <div class="toolbar">
+      <input id="title" placeholder="Título">
+      <button class="primary" onclick="save()">Salvar</button>
+      <button onclick="clearAll()">Limpar</button>
+    </div>
+    <textarea id="content" placeholder="Escreva sua nota..."></textarea>
+  </section>
+</main>
 
-      <textarea id="content" placeholder="Escreva sua nota..."></textarea>
-    </section>
-  </main>
+<script>
+const KEY = "notas_v2";
+let editingId = null;
 
-  <footer>GABRIEL@</footer>
+function getNotes() {
+  return JSON.parse(localStorage.getItem(KEY) || "[]");
+}
 
-  <script>
-    const KEY = 'notas_v1';
-    const notesEl = document.getElementById('notes');
-    let editingId = null;
+function setNotes(n) {
+  localStorage.setItem(KEY, JSON.stringify(n));
+  render();
+}
 
-    function getNotes() {
-      return JSON.parse(localStorage.getItem(KEY) || '[]');
-    }
+function save() {
+  const title = titleEl.value.trim();
+  const content = contentEl.value.trim();
+  if (!title && !content) return;
 
-    function setNotes(n) {
-      localStorage.setItem(KEY, JSON.stringify(n));
-      render();
-    }
+  const notes = getNotes();
 
-    function saveNote() {
-      const title = document.getElementById('title').value.trim();
-      const content = document.getElementById('content').value.trim();
-      if (!title && !content) return;
+  if (editingId) {
+    const n = notes.find(n => n.id === editingId);
+    n.title = title || "Sem título";
+    n.content = content;
+    editingId = null;
+  } else {
+    notes.unshift({
+      id: Date.now(),
+      title: title || "Sem título",
+      content
+    });
+  }
 
-      const notes = getNotes();
+  setNotes(notes);
+  titleEl.value = "";
+  contentEl.value = "";
+}
 
-      if (editingId) {
-        const idx = notes.findIndex(n => n.id === editingId);
-        if (idx !== -1) {
-          notes[idx].title = title || 'Sem título';
-          notes[idx].content = content;
-          notes[idx].at = new Date().toLocaleString();
-        }
-        editingId = null;
-      } else {
-        notes.unshift({
-          id: Date.now(),
-          title: title || 'Sem título',
-          content,
-          at: new Date().toLocaleString()
-        });
-      }
+function edit(id) {
+  const n = getNotes().find(n => n.id === id);
+  titleEl.value = n.title;
+  contentEl.value = n.content;
+  editingId = id;
+}
 
-      setNotes(notes);
-      document.getElementById('title').value = '';
-      document.getElementById('content').value = '';
-    }
+function del(id) {
+  setNotes(getNotes().filter(n => n.id !== id));
+}
 
-    function edit(id) {
-      const note = getNotes().find(n => n.id === id);
-      if (!note) return;
-      document.getElementById('title').value = note.title;
-      document.getElementById('content').value = note.content;
-      editingId = id;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+function clearAll() {
+  if (confirm("Apagar tudo?")) setNotes([]);
+}
 
-    function del(id) {
-      setNotes(getNotes().filter(n => n.id !== id));
-    }
+function render() {
+  const notes = getNotes();
 
-    function clearAll() {
-      if (confirm('Apagar todas as notas?')) setNotes([]);
-    }
+  notesEl.innerHTML = notes.map((n, i) => `
+    <article class="note ${i < 3 ? 'new' : 'old'}">
+      <h3>${n.title}</h3>
+      <p>${n.content.replace(/</g,"&lt;")}</p>
+      <div class="actions">
+        <button onclick="edit(${n.id})">Editar</button>
+        <button onclick="del(${n.id})">Excluir</button>
+      </div>
+    </article>
+  `).join("");
+}
 
-    function render() {
-      const notes = getNotes();
-      notesEl.innerHTML = notes.map(n => `
-        <article class="note">
-          <h3>${n.title}</h3>
-          <p>${n.content.replace(/</g, '&lt;')}</p>
-          <small>${n.at}</small>
-          <div class="actions">
-            <button onclick="edit(${n.id})">Editar</button>
-            <button onclick="del(${n.id})">Excluir</button>
-          </div>
-        </article>
-      `).join('');
-    }
+const notesEl = document.getElementById("notes");
+const titleEl = document.getElementById("title");
+const contentEl = document.getElementById("content");
 
-    render();
-  </script>
+render();
+</script>
 </body>
 </html>
