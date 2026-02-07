@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notas</title>
+<title>Minhas Notas</title>
 
 <style>
 :root {
@@ -37,17 +37,17 @@ header {
   align-items: center;
 }
 
-/* ===== LAYOUT ===== */
+/* ===== LAYOUT PRINCIPAL ===== */
 main.wrap {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1.6fr 1fr; /* notas maiores */
   gap: 24px;
 }
 
-/* ===== NOTAS (ESQUERDA) ===== */
+/* ===== NOTAS SALVAS (ESQUERDA) ===== */
 #notes {
   display: grid;
-  gap: 18px;
+  gap: 20px;
   max-height: 80vh;
   overflow-y: auto;
 }
@@ -56,21 +56,22 @@ main.wrap {
 .note {
   background: var(--card);
   border: 1px solid #232862;
-  border-radius: 18px;
+  border-radius: 20px;
   transition: 0.2s;
 }
 
 /* NOTAS ANTIGAS (MAIORES) */
 .note.old {
-  padding: 22px;
+  padding: 26px;
 }
 
 .note.old h3 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 
 .note.old p {
-  font-size: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
 }
 
 /* NOTAS NOVAS (MENORES) */
@@ -96,11 +97,16 @@ main.wrap {
   color: var(--muted);
 }
 
+.note:hover {
+  transform: scale(1.02);
+  border-color: var(--accent);
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 button {
@@ -108,7 +114,7 @@ button {
   color: var(--text);
   border: 1px solid #232862;
   border-radius: 10px;
-  padding: 6px 10px;
+  padding: 6px 12px;
   cursor: pointer;
 }
 
@@ -136,8 +142,8 @@ input, textarea {
 }
 
 textarea {
-  min-height: 520px;
-  font-size: 1.05rem;
+  min-height: 380px; /* menor que as notas */
+  font-size: 1rem;
   line-height: 1.6;
   resize: vertical;
 }
@@ -152,13 +158,14 @@ textarea {
 </head>
 
 <body>
+
 <header class="wrap">
-  <h2>📝 Notas</h2>
-  <small>localStorage</small>
+  <h2>📝Notas</h2>
+  <small>salvo no navegador</small>
 </header>
 
 <main class="wrap">
-  <!-- NOTAS -->
+  <!-- NOTAS SALVAS -->
   <section id="notes"></section>
 
   <!-- EDITOR -->
@@ -173,8 +180,12 @@ textarea {
 </main>
 
 <script>
-const KEY = "notas_v1";
+const KEY = "notas_v1"; // NÃO muda isso
 let editingId = null;
+
+const notesEl = document.getElementById("notes");
+const titleEl = document.getElementById("title");
+const contentEl = document.getElementById("content");
 
 function getNotes() {
   return JSON.parse(localStorage.getItem(KEY) || "[]");
@@ -222,7 +233,7 @@ function del(id) {
 }
 
 function clearAll() {
-  if (confirm("Apagar tudo?")) setNotes([]);
+  if (confirm("Apagar todas as notas?")) setNotes([]);
 }
 
 function render() {
@@ -240,11 +251,8 @@ function render() {
   `).join("");
 }
 
-const notesEl = document.getElementById("notes");
-const titleEl = document.getElementById("title");
-const contentEl = document.getElementById("content");
-
 render();
 </script>
+
 </body>
 </html>
