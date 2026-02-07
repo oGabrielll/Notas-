@@ -1,195 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yasmin ❤️</title>
-
-  <!-- Fonte -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minhas Notas</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #0f1220;
+      --card: #171a2e;
+      --text: #e9ecff;
+      --muted: #9aa1ff;
+      --accent: #6c7bff;
     }
-
-    body {
-      height: 100vh;
-      overflow: hidden;
-      font-family: 'Inter', system-ui, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      background: black;
-    }
-
-    /* FUNDO AURORA */
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      inset: -50%;
-      background: radial-gradient(
-        ellipse at center,
-        rgba(0, 255, 200, 0.25),
-        rgba(120, 0, 255, 0.25),
-        rgba(255, 0, 120, 0.15),
-        transparent 60%
-      );
-      animation: aurora 18s ease-in-out infinite alternate;
-      z-index: -2;
-    }
-
-    body::after {
-      animation-duration: 28s;
-      filter: blur(60px);
-      opacity: 0.8;
-    }
-
-    @keyframes aurora {
-      0% {
-        transform: translate(-20%, -10%) rotate(0deg);
-      }
-      50% {
-        transform: translate(10%, 20%) rotate(120deg);
-      }
-      100% {
-        transform: translate(-10%, -20%) rotate(240deg);
-      }
-    }
-
-    /* TELA INICIAL */
-    .start-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      cursor: pointer;
-      z-index: 2;
-    }
-
-    .start-screen span {
-      letter-spacing: 0.2em;
-      opacity: 0.85;
-    }
-
-    .heart {
-      font-size: 90px;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
-
-    /* MENSAGEM */
-    .message {
-      display: none;
-      position: absolute;
-      text-align: center;
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-shadow: 0 0 40px rgba(255, 0, 120, 0.8);
-      opacity: 0;
-      z-index: 2;
-    }
-
-    /* CORAÇÕES */
-    .floating-heart {
-      position: absolute;
-      bottom: -20px;
-      font-size: 20px;
-      animation: float 6s linear forwards;
-      opacity: 0.8;
-      z-index: 1;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-120vh);
-        opacity: 0;
-      }
-    }
-
-    /* TRANSIÇÕES */
-    .fade-out {
-      animation: fadeOut 0.8s forwards;
-    }
-
-    .fade-in {
-      animation: fadeIn 1.2s forwards;
-    }
-
-    @keyframes fadeOut {
-      from { opacity: 1; transform: scale(1); }
-      to { opacity: 0; transform: scale(0.9); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(1.2); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* MOBILE */
-    @media (max-width: 600px) {
-      .message {
-        font-size: clamp(3.2rem, 10vw, 4.2rem);
-      }
-    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu; }
+    body { margin: 0; background: linear-gradient(120deg, #0f1220, #0b0e1a); color: var(--text); }
+    header { padding: 20px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+    h1 { font-size: 1.2rem; margin: 0; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 16px; }
+    .toolbar { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+    input, textarea, button { background: var(--card); color: var(--text); border: 1px solid #232862; border-radius: 12px; padding: 10px 12px; }
+    textarea { min-height: 90px; resize: vertical; }
+    button { cursor: pointer; }
+    button.primary { background: linear-gradient(135deg, var(--accent), #8b95ff); color: #0b0e1a; border: none; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .note { background: var(--card); border: 1px solid #232862; border-radius: 16px; padding: 12px; display: grid; gap: 8px; }
+    .note h3 { margin: 0; font-size: 0.95rem; }
+    .note p { margin: 0; color: #d6dbff; font-size: 0.9rem; }
+    .note small { color: var(--muted); }
+    .note .actions { display: flex; gap: 8px; }
+    .note .actions button { padding: 6px 10px; font-size: 0.8rem; }
+    footer { text-align: center; color: var(--muted); padding: 20px; }
   </style>
 </head>
 <body>
+  <header class="wrap">
+    <h1>📝 Minhas Notas</h1>
+    <span><small>salvo no navegador</small></span>
+  </header>
 
-  <!-- TELA INICIAL -->
-  <div class="start-screen" onclick="startLove()">
-    <div class="heart">❤️</div>
-    <span>APERTA AQUI</span>
-  </div>
+  <main class="wrap">
+    <section class="toolbar">
+      <input id="title" placeholder="Título" />
+      <button class="primary" onclick="saveNote()">Salvar</button>
+      <button onclick="clearAll()">Limpar</button>
+    </section>
+    <textarea id="content" placeholder="Escreva sua nota..."></textarea>
 
-  <!-- MENSAGEM -->
-  <div class="message" id="message">
-    TE AMO<br>YASMIN
-  </div>
+    <section id="notes" class="grid"></section>
+  </main>
+
+  <footer>feito com ❤️ | html + css + js</footer>
 
   <script>
-    function startLove() {
-      const startScreen = document.querySelector('.start-screen');
-      const message = document.getElementById('message');
+    const KEY = 'notas_v1';
+    const notesEl = document.getElementById('notes');
 
-      startScreen.classList.add('fade-out');
-
-      setTimeout(() => {
-        startScreen.style.display = 'none';
-        message.style.display = 'block';
-        message.classList.add('fade-in');
-        setInterval(createHeart, 300);
-      }, 800);
+    function getNotes() {
+      return JSON.parse(localStorage.getItem(KEY) || '[]');
     }
 
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('floating-heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (15 + Math.random() * 20) + 'px';
-      document.body.appendChild(heart);
-
-      setTimeout(() => heart.remove(), 6000);
+    function setNotes(n) {
+      localStorage.setItem(KEY, JSON.stringify(n));
+      render();
     }
+
+    function saveNote() {
+      const title = document.getElementById('title').value.trim();
+      const content = document.getElementById('content').value.trim();
+      if (!title && !content) return;
+      const notes = getNotes();
+      notes.unshift({ id: Date.now(), title: title || 'Sem título', content, at: new Date().toLocaleString() });
+      setNotes(notes);
+      document.getElementById('title').value = '';
+      document.getElementById('content').value = '';
+    }
+
+    function del(id) {
+      setNotes(getNotes().filter(n => n.id !== id));
+    }
+
+    function clearAll() {
+      if (confirm('Apagar todas as notas?')) setNotes([]);
+    }
+
+    function render() {
+      const notes = getNotes();
+      notesEl.innerHTML = notes.map(n => `
+        <article class="note">
+          <h3>${n.title}</h3>
+          <p>${n.content.replace(/</g,'&lt;')}</p>
+          <small>${n.at}</small>
+          <div class="actions">
+            <button onclick="del(${n.id})">Excluir</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    render();
   </script>
-
 </body>
 </html>
