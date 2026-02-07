@@ -64,15 +64,38 @@
       render();
     }
 
+    let editingId = null;
+
     function saveNote() {
       const title = document.getElementById('title').value.trim();
       const content = document.getElementById('content').value.trim();
       if (!title && !content) return;
       const notes = getNotes();
-      notes.unshift({ id: Date.now(), title: title || 'Sem título', content, at: new Date().toLocaleString() });
+
+      if (editingId) {
+        const idx = notes.findIndex(n => n.id === editingId);
+        if (idx !== -1) {
+          notes[idx].title = title || 'Sem título';
+          notes[idx].content = content;
+          notes[idx].at = new Date().toLocaleString();
+        }
+        editingId = null;
+      } else {
+        notes.unshift({ id: Date.now(), title: title || 'Sem título', content, at: new Date().toLocaleString() });
+      }
+
       setNotes(notes);
       document.getElementById('title').value = '';
       document.getElementById('content').value = '';
+    }
+
+    function edit(id) {
+      const note = getNotes().find(n => n.id === id);
+      if (!note) return;
+      document.getElementById('title').value = note.title;
+      document.getElementById('content').value = note.content;
+      editingId = id;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function del(id) {
@@ -91,8 +114,9 @@
           <p>${n.content.replace(/</g,'&lt;')}</p>
           <small>${n.at}</small>
           <div class="actions">
+            <button onclick="edit(${n.id})">Editar</button>
             <button onclick="del(${n.id})">Excluir</button>
-          </div>
+          <
         </article>
       `).join('');
     }
